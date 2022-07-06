@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 def replace_in_list(my_list, idx, element):
-    if idx < 0 or idx > len(my_list) - 1:
-        return my_list
-    else:
+    """Replace an element of a list at a specific position."""
+    if idx >= 0 and idx < len(my_list):
         my_list[idx] = element
+<<<<<<< HEAD
         return
 
+=======
+    return (my_list)
+#
+>>>>>>> 40baaa7f86f7fc3610065674bf77befed7b6e45d
