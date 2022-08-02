@@ -1,24 +1,40 @@
 #!/usr/bin/python3
-"""Module 1-number_of_lines.
-Counts number of lines in a file.
 """
+reads stdin line by line and computes metrics
+"""
+import sys
 
+file_size = 0
+status_tally = {"200": 0, "301": 0, "400": 0, "401": 0,
+                "403": 0, "404": 0, "405": 0, "500": 0}
+i = 0
+try:
+    for line in sys.stdin:
+        tokens = line.split()
+        if len(tokens) >= 2:
+            a = i
+            if tokens[-2] in status_tally:
+                status_tally[tokens[-2]] += 1
+                i += 1
+            try:
+                file_size += int(tokens[-1])
+                if a == i:
+                    i += 1
+            except:
+                if a == i:
+                    continue
+        if i % 10 == 0:
+            print("File size: {:d}".format(file_size))
+            for key, value in sorted(status_tally.items()):
+                if value:
+                    print("{:s}: {:d}".format(key, value))
+    print("File size: {:d}".format(file_size))
+    for key, value in sorted(status_tally.items()):
+        if value:
+            print("{:s}: {:d}".format(key, value))
 
-def number_of_lines(filename=""):
-    """Counts lines in filename.
-
-    Args:
-        - filename: name of the file
-
-    Returns:
-        - number of lines
-    """
-
-    count = 0
-
-    with open(filename) as f:
-        text = f.readlines()
-        for line in text:
-            count += 1
-
-    return count
+except KeyboardInterrupt:
+    print("File size: {:d}".format(file_size))
+    for key, value in sorted(status_tally.items()):
+        if value:
+            print("{:s}: {:d}".format(key, value))
