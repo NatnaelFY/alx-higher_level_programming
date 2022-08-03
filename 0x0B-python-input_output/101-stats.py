@@ -1,40 +1,42 @@
 #!/usr/bin/python3
 """
-    filename: 10-student.py
-    defines a student class
+Module for log parsing scripts.
 """
 
 
-class Student:
-    """represent a student"""
-    def __init__(self, first_name, last_name, age):
-        """
-            Initializes the student instance
-            Args:
-                arg1: (string)first_name
-                arg2: (string)last_name
-                arg3: (int)age
-        """
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+import sys
 
-    def to_json(self, attrs=None):
-        """retrieves a dictionary representation of a Student instance"""
-        if attrs is not None:
-            dct = {}
-            for k, v in self.__dict__.items():
-                if k in attrs:
-                    dct[k] = v
-            return dct
-        else:
-            return self.__dict__
 
-    def reload_from_json(self, json):
-        """
-            replaces all attributes of the student instance
-        Args:
-            arg1: (dict)json
-        """
-        for k, v in json.items():
-            setattr(self, k, v)
+if __name__ == "__main__":
+    size = [0]
+    codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+
+    def check_match(line):
+        '''Checks for regexp match in line.'''
+        try:
+            line = line[:-1]
+            words = line.split(" ")
+            size[0] += int(words[-1])
+            code = int(words[-2])
+            if code in codes:
+                codes[code] += 1
+        except:
+            pass
+
+    def print_stats():
+        '''Prints accumulated statistics.'''
+        print("File size: {}".format(size[0]))
+        for k in sorted(codes.keys()):
+            if codes[k]:
+                print("{}: {}".format(k, codes[k]))
+    i = 1
+    try:
+        for line in sys.stdin:
+            check_match(line)
+            if i % 10 == 0:
+                print_stats()
+            i += 1
+    except KeyboardInterrupt:
+        print_stats()
+        raise
+    print_stats()
