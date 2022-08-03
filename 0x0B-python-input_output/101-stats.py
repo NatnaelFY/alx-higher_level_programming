@@ -1,57 +1,40 @@
 #!/usr/bin/python3
-"""Reads from standard input and computes metrics.
-After every ten lines or the input of a keyboard interruption (CTRL + C),
-prints the following statistics:
-    - Total file size up to that point.
-    - Count of read status codes up to that point.
+"""
+    filename: 10-student.py
+    defines a student class
 """
 
 
-def print_stats(size, status_codes):
-    """Print accumulated metrics.
-    Args:
-        size (int): The accumulated read file size.
-        status_codes (dict): The accumulated count of status codes.
-    """
-    print("File size: {}".format(size))
-    for key in sorted(status_codes):
-        print("{}: {}".format(key, status_codes[key]))
+class Student:
+    """represent a student"""
+    def __init__(self, first_name, last_name, age):
+        """
+            Initializes the student instance
+            Args:
+                arg1: (string)first_name
+                arg2: (string)last_name
+                arg3: (int)age
+        """
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
 
+    def to_json(self, attrs=None):
+        """retrieves a dictionary representation of a Student instance"""
+        if attrs is not None:
+            dct = {}
+            for k, v in self.__dict__.items():
+                if k in attrs:
+                    dct[k] = v
+            return dct
+        else:
+            return self.__dict__
 
-if __name__ == "__main__":
-    import sys
-
-    size = 0
-    status_codes = {}
-    valid_codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
-    count = 0
-
-    try:
-        for line in sys.stdin:
-            if count == 10:
-                print_stats(size, status_codes)
-                count = 1
-            else:
-                count += 1
-
-            line = line.split()
-
-            try:
-                size += int(line[-1])
-            except (IndexError, ValueError):
-                pass
-
-            try:
-                if line[-2] in valid_codes:
-                    if status_codes.get(line[-2], -1) == -1:
-                        status_codes[line[-2]] = 1
-                    else:
-                        status_codes[line[-2]] += 1
-            except IndexError:
-                pass
-
-        print_stats(size, status_codes)
-
-    except KeyboardInterrupt:
-        print_stats(size, status_codes)
-        raise
+    def reload_from_json(self, json):
+        """
+            replaces all attributes of the student instance
+        Args:
+            arg1: (dict)json
+        """
+        for k, v in json.items():
+            setattr(self, k, v)
