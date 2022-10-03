@@ -1,14 +1,8 @@
 #!/usr/bin/node
-
-// script that prints a message depending
-// on the number of arguments passed
-
-const myArgs = process.argv.slice(2);
-
-if (myArgs.length === 1) {
-  console.log('Argument found');
-} else if (myArgs.length > 1) {
-  console.log('Arguments found');
-} else {
+if (process.argv.length === 2) {
   console.log('No argument');
+} else if (process.argv.length === 3) {
+  console.log('Argument found');
+} else {
+  console.log('Arguments found');
 }

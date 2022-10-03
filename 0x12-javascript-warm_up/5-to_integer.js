@@ -1,12 +1,6 @@
 #!/usr/bin/node
-
-// Script that prints two arguments passed to it
-// concatenated with "is" string
-
-const args = process.argv.slice(2);
-
-if (Number.isNaN(parseInt(args[0]))) {
+if (isNaN(process.argv[2]) || process.argv[2] === undefined) {
   console.log('Not a number');
 } else {
-  console.log('My number: ' + parseInt(args[0]));
+  console.log('My number:', parseInt(process.argv[2]));
 }

@@ -1,17 +1,11 @@
 #!/usr/bin/node
-// print 'count' times a statment
-
-const statement = 'C is fun';
-
-let count = 0;
-
-const args = process.argv.slice(2);
-
-if (Number.isNaN(parseInt(args[0]))) {
+if (process.argv[2] === undefined || isNaN(process.argv[2])) {
   console.log('Missing number of occurrences');
 } else {
-  while (count < parseInt(args[0])) {
-    console.log(statement);
-    count += 1;
+  const x = Number(process.argv[2]);
+  let i = 0;
+  while (i < x) {
+    console.log('C is fun');
+    i++;
   }
 }
