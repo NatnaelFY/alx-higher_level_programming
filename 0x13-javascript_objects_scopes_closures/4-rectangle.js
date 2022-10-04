@@ -1,6 +1,9 @@
 #!/usr/bin/node
 
 // A class that defines a rectangle
+// and checks if w and h are greater than
+// 0. If not, define an empty object. And has
+// the method print.
 
 class Rectangle {
   constructor (w, h) {
