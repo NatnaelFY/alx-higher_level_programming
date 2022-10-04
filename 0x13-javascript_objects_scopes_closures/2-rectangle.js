@@ -1,5 +1,9 @@
 #!/usr/bin/node
 
+// A class that defines a rectangle
+// and checks if w and h are non-zero and
+// non-negative. If not, define an empty object
+
 class Rectangle {
   constructor (w, h) {
     if ((w > 0) && (h > 0)) {
@@ -8,5 +12,4 @@ class Rectangle {
     }
   }
 }
-  
-  module.exports = Rectangle;
+module.exports = Rectangle;
